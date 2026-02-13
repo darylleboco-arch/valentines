@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You 💖</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Courier New', monospace;
+    text-align: center;
+    color: white;
+    overflow-x: hidden;
+
+    background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+    background-size: 400% 400%;
+    animation: gradient 10s ease infinite;
+}
+
+@keyframes gradient {
+    0% {background-position: 0%}
+    50% {background-position: 100%}
+    100% {background-position: 0%}
+}
+
+h1 {
+    margin-top: 60px;
+}
+
+/* BUTTON */
+#startBtn {
+    padding: 15px 30px;
+    font-size: 20px;
+    border: none;
+    border-radius: 30px;
+    background: white;
+    color: #ff4b5c;
+    cursor: pointer;
+    box-shadow: 0 0 15px pink;
+}
+
+/* COUNTDOWN */
+#countdown {
+    font-size: 50px;
+    margin-top: 20px;
+}
+
+/* MESSAGE */
+#message {
+    font-size: 22px;
+    width: 80%;
+    margin: 30px auto;
+    border-right: 3px solid white;
+    white-space: pre-line;
+    overflow: hidden;
+}
+
+/* GALLERY */
+.gallery img {
+    width: 140px;
+    margin: 10px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px white;
+}
+
+/* FINAL */
+#final {
+    display: none;
+    margin-top: 30px;
+}
+
+#girl {
+    width: 200px;
+}
+
+#bubble {
+    background: white;
+    color: #ff4b5c;
+    padding: 15px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+/* FALLING ITEMS */
+.fall {
+    position: fixed;
+    top: -10px;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<h1>💌 A Letter For You 💌</h1>
+
+<button id="startBtn">Open Letter 💖</button>
+
+<div id="countdown"></div>
+<div id="message"></div>
+
+<div class="gallery" id="gallery" style="display:none;">
+    <img src="1.jpg">
+    <img src="2.jpg">
+    <img src="3.jpg">
+    <img src="4.jpg">
+    <img src="5.jpg">
+</div>
+
+<div id="final">
+    <img id="girl" src="girl.png">
+    <div id="bubble">Happy Valentines po 💐</div>
+</div>
+
+<script>
+
+// START BUTTON
+document.getElementById("startBtn").onclick = function() {
+    startCountdown();
+    this.style.display = "none";
+}
+
+// COUNTDOWN
+function startCountdown() {
+    let count = 3;
+    let cd = document.getElementById("countdown");
+
+    let interval = setInterval(() => {
+        cd.innerHTML = count;
+
+        if(count == 0){
+            clearInterval(interval);
+            cd.innerHTML = "";
+            typeWriter();
+        }
+        count--;
+    }, 1000);
+}
+
+// TYPEWRITER TEXT
+let text = `So, this is cheesy but you don't have a freaking choice but to read this. I've been thinking what to say and honestly words does'nt enough for someone like you. 
+Eleven yrs. bruh, soooo tagal na. Like how did we meet nga ba? We've grown, change and experienced so many things,
+but one thing never change, i still saw that face of yours. 
+Thank you? for being their, listening my random thoughts, laughing with me even wala naman funny. I may not always say this but I truly appreciate you`;
+
+let i = 0;
+let speed = 50;
+
+function typeWriter() {
+    if (i < text.length) {
+        document.getElementById("message").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+    } else {
+        document.getElementById("gallery").style.display = "block";
+        document.getElementById("final").style.display = "block";
+    }
+}
+
+// FALLING HEARTS + FLOWERS
+function createFall() {
+    let item = document.createElement("div");
+    item.className = "fall";
+
+    let symbols = ["💖","🌸","🌹","💗"];
+    item.innerHTML = symbols[Math.floor(Math.random()*symbols.length)];
+
+    item.style.left = Math.random() * 100 + "vw";
+    item.style.fontSize = Math.random() * 20 + 20 + "px";
+    item.style.animationDuration = Math.random() * 3 + 2 + "s";
+
+    document.body.appendChild(item);
+
+    setTimeout(() => {
+        item.remove();
+    }, 5000);
+}
+
+setInterval(createFall, 300);
+
+</script>
+
+</body>
+</html>
